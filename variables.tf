@@ -1,6 +1,5 @@
 variable "rgname" {
   type        = string
-  default     = "inf-rg-rhanner1"
   description = "Resource Group Name"
 }
 
