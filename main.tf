@@ -36,6 +36,7 @@ resource "azurerm_storage_account" "example" {
   location                 = azurerm_resource_group.rg1.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  allow_blob_public_access = false
   allow_nested_items_to_be_public = false
 }
 
