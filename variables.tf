@@ -18,3 +18,7 @@ variable "vnet1name" {
 variable "vnet1cidr" {
   type = string
 }
+
+variable "storagename" {
+  type = string
+}
