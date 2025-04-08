@@ -8,10 +8,6 @@ terraform {
 }
 
 provider "azurerm" {
-  #  subscription_id = ""
-  #  client_id       = ""
-  #  client_secret   = ""
-  #  tenant_id       = ""
   features {}
 }
 
@@ -58,8 +54,6 @@ resource "azurerm_storage_share" "share1" {
   storage_account_name = azurerm_storage_account.storage1.name
   quota                = 50
 }
-
-###
 
 resource "azurerm_private_dns_zone" "privdns1" {
   name                = "privatelink.file.core.windows.net"
