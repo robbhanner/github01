@@ -51,21 +51,21 @@ variable "subnets" {
 
 variable "private_dns_zone_name" {
   description = "Resource ID of Private DNS Zone"
-  type = string
+  type        = string
 }
 
 variable "private_dns_zone_ids" {
   description = "Resource ID of Private DNS Zone"
-  type = list(string)
+  type        = list(string)
 }
 
 variable "virtual_network_ids" {
   description = "Resource ID of Virtual Network"
-  type = list(string)
+  type        = list(string)
 }
 
 variable "dnslinkname" {
-  type = string
+  type        = string
   description = "Name of resource linking Private DNS Zone and VNet"
 }
 

@@ -14,8 +14,8 @@ module "resource_group" {
 }
 
 module "virtual_network" {
-  source  = "us.spacelift.io/claconnect/virtual_network/azurerm"
-  version = "1.0.0"
+  source               = "us.spacelift.io/claconnect/virtual_network/azurerm"
+  version              = "1.0.0"
   virtual_network_name = var.virtual_network_name
   resource_group_name  = module.resource_group.name
   location             = var.location
@@ -51,7 +51,7 @@ module "private_dns_zone" {
   tags                  = var.tags
   virtual_network_ids   = var.virtual_network_ids
 
-  depends_on = [ module.virtual_network ]
+  depends_on = [module.virtual_network]
 }
 
 
@@ -99,7 +99,7 @@ resource "azurerm_private_endpoint" "pep1" {
     name                 = "dns-group1"
     private_dns_zone_ids = module.private_dns_zone.id
   }
-  depends_on = [ module.storage_file_share ]
+  depends_on = [module.storage_file_share]
 }
 
 
