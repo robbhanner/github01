@@ -11,6 +11,30 @@ provider "azurerm" {
   features {}
 }
 
+resource "azurerm_storage_account" "storage1" {
+  name                              = var.storagename
+  resource_group_name               = azurerm_resource_group.rg1.name
+  location                          = azurerm_resource_group.rg1.location
+  account_tier                      = "Standard"
+  account_replication_type          = "LRS"
+  allow_nested_items_to_be_public   = false
+  infrastructure_encryption_enabled = true
+
+  network_rules {
+    default_action = "Deny"
+    ip_rules       = ["70.185.192.48"]
+    #virtual_network_subnet_ids = [azurerm_subnet.snet1.id]
+  }
+}
+
+
+resource "azurerm_storage_share" "share1" {
+  name                 = var.sharename
+  storage_account_name = azurerm_storage_account.storage1.name
+  quota                = 50
+}
+
+
 resource "azurerm_resource_group" "rg1" {
   name     = var.rgname
   location = var.location
@@ -31,28 +55,6 @@ resource "azurerm_subnet" "snet1" {
   resource_group_name  = azurerm_resource_group.rg1.name
   virtual_network_name = azurerm_virtual_network.vnet1.name
   address_prefixes     = [var.snet1cidr]
-}
-
-resource "azurerm_storage_account" "storage1" {
-  name                              = var.storagename
-  resource_group_name               = azurerm_resource_group.rg1.name
-  location                          = azurerm_resource_group.rg1.location
-  account_tier                      = "Standard"
-  account_replication_type          = "LRS"
-  allow_nested_items_to_be_public   = false
-  infrastructure_encryption_enabled = true
-
-  network_rules {
-    default_action = "Deny"
-    ip_rules       = ["70.185.192.48"]
-    #virtual_network_subnet_ids = [azurerm_subnet.snet1.id]
-  }
-}
-
-resource "azurerm_storage_share" "share1" {
-  name                 = var.sharename
-  storage_account_name = azurerm_storage_account.storage1.name
-  quota                = 50
 }
 
 resource "azurerm_private_dns_zone" "privdns1" {

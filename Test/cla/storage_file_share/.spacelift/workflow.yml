@@ -1,0 +1,9 @@
+init: terraform init -input=false
+workspaceSelect: terraform workspace select "{{ .WorkspaceName }}"
+workspaceNew: terraform workspace new "{{ .WorkspaceName }}"
+plan: terraform plan -input=false -lock={{ .Lock }} {{ if not .Refresh }}-refresh=false {{ end }}-out={{ .PlanFileName }} {{ range .Targets }}-target='{{ . }}' {{ end }}
+showState: terraform show -json
+showPlan: terraform show -json "{{ .PlanFileName }}"
+getOutputs: terraform output -json
+apply: terraform apply -auto-approve -input=false "{{ .PlanFileName }}"
+destroy: terraform destroy -auto-approve -input=false
