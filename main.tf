@@ -32,7 +32,7 @@ resource "azurerm_subnet" "snet1" {
   resource_group_name  = azurerm_resource_group.rg1.name
   virtual_network_name = azurerm_virtual_network.vnet1.name
   address_prefixes     = [var.snet1cidr]
-  service_endpoints = ["Microsoft.Storage"]
+  service_endpoints    = ["Microsoft.Storage"]
   delegation {
     name = "fs"
     service_delegation {
@@ -40,12 +40,12 @@ resource "azurerm_subnet" "snet1" {
       actions = [
         "Microsoft.Network/virtualNetworks/subnets/join/action",
       ]
-    }   
+    }
   }
 }
 
 resource "azurerm_private_dns_zone" "privdns1" {
-  name                = "privatelink.file.core.windows.net"
+  name                = "hanner-psqlfs1.postgres.database.azure.com"
   resource_group_name = azurerm_resource_group.rg1.name
 }
 
@@ -63,7 +63,7 @@ resource "azurerm_postgresql_flexible_server" "pgsql" {
   version             = "12"
   delegated_subnet_id = azurerm_subnet.snet1.id
   private_dns_zone_id = azurerm_private_dns_zone.privdns1.id
-  #public_network_access_enabled = false
+  #public_network_access_enabled = false  #not needed when delegated subnet id and private dns zone id are set
   administrator_login    = "psqladmin"
   administrator_password = "H@Sh1CoR3!"
   zone                   = "1"
