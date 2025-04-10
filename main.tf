@@ -26,11 +26,22 @@ resource "azurerm_virtual_network" "vnet1" {
   address_space       = [var.vnet1cidr]
 }
 
+#Dedicated Subnet for PostgreSQL Flexible Servers
 resource "azurerm_subnet" "snet1" {
   name                 = var.subnet1name
   resource_group_name  = azurerm_resource_group.rg1.name
   virtual_network_name = azurerm_virtual_network.vnet1.name
   address_prefixes     = [var.snet1cidr]
+  service_endpoints = ["Microsoft.Storage"]
+  delegation {
+    name = "fs"
+    service_delegation {
+      name = "Microsoft.DBforPostgreSQL/flexibleServers"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+      ]
+    }   
+  }
 }
 
 resource "azurerm_private_dns_zone" "privdns1" {
