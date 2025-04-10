@@ -45,7 +45,7 @@ resource "azurerm_subnet" "snet1" {
 }
 
 resource "azurerm_private_dns_zone" "privdns1" {
-  name                = "hanner-psqlfs1.postgres.database.azure.com"
+  name                = "psqlfs1-pdz.postgres.database.azure.com"
   resource_group_name = azurerm_resource_group.rg1.name
 }
 
