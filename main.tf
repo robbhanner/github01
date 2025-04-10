@@ -46,18 +46,18 @@ resource "azurerm_private_dns_zone_virtual_network_link" "vnetdnslink1" {
 }
 
 resource "azurerm_postgresql_flexible_server" "pgsql" {
-  name                          = "example-psqlflexibleserver"
+  name                          = "hanner-psqlfs1"
   resource_group_name           = azurerm_resource_group.rg1.name
   location                      = azurerm_resource_group.rg1.location
   version                       = "12"
   delegated_subnet_id           = azurerm_subnet.snet1.id
   private_dns_zone_id           = azurerm_private_dns_zone.privdns1.id
-  public_network_access_enabled = false
+  #public_network_access_enabled = false
   administrator_login           = "psqladmin"
   administrator_password        = "H@Sh1CoR3!"
   zone                          = "1"
 
-  storage_mb   = 32768
+  storage_mb = 32768
   # storage_tier = "P4"
 
   sku_name   = "B_Standard_B1ms"
