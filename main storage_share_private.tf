@@ -20,6 +20,7 @@ resource "azurerm_storage_account" "storage1" {
   allow_nested_items_to_be_public   = false
   infrastructure_encryption_enabled = true
 
+
   network_rules {
     default_action = "Deny"
     ip_rules       = ["70.185.192.48"]
@@ -36,7 +37,7 @@ resource "azurerm_storage_share" "share1" {
 
 
 resource "azurerm_resource_group" "rg1" {
-  name     = var.rgname
+  name     = var.resource_group_name
   location = var.location
   tags = {
     environment = var.environment
