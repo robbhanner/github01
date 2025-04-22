@@ -23,7 +23,7 @@ resource "azurerm_storage_account" "storage1" {
 
   network_rules {
     default_action = "Deny"
-    ip_rules       = ["70.185.192.48"]
+    ip_rules       = ["0.0.0.0/0"]
     #virtual_network_subnet_ids = [azurerm_subnet.snet1.id]
   }
 }

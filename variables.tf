@@ -43,7 +43,7 @@ variable "administrator_password" {
 variable "zone" {
   type        = string
   description = "Specifies the Availability Zone in which the PostgreSQL Flexible Server should be located"
-  default = null
+  default     = null
 }
 
 variable "tags" {
@@ -115,7 +115,7 @@ variable "subnet1cidr" {
   type = string
 }
 variable "environment" {
-  type = string
+  type    = string
   default = "Test"
 }
 
