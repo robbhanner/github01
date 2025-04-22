@@ -35,7 +35,7 @@ resource "azurerm_cognitive_account" "docintel1" {
 
   identity {
     type = "SystemAssigned"
-    identity_ids = [null]
+    identity_ids = []
   }
 }
 
