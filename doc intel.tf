@@ -15,9 +15,9 @@ resource "azurerm_cognitive_account" "docintel1" {
   location            = azurerm_resource_group.rg1.location
   resource_group_name = azurerm_resource_group.rg1.name
 
-  kind                       = "FormRecognizer"
+  kind = "FormRecognizer"
   #dynamic_throttling_enabled = false
-  local_auth_enabled         = true
+  local_auth_enabled = true
 
   custom_subdomain_name              = "infradocinteltest123ABC"
   outbound_network_access_restricted = false
@@ -34,7 +34,7 @@ resource "azurerm_cognitive_account" "docintel1" {
   }
 
   identity {
-    type = "SystemAssigned"
+    type         = "SystemAssigned"
     identity_ids = []
   }
 }
