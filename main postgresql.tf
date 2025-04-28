@@ -62,7 +62,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql_fs" {
   location            = var.location
 
   #Optional Arguments
-  version                = var.version_num
+  version = var.version_num
   #delegated_subnet_id    = azurerm_subnet.snet1.id
   private_dns_zone_id    = azurerm_private_dns_zone.privdns1.id
   administrator_login    = var.administrator_login
@@ -72,7 +72,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql_fs" {
 
   public_network_access_enabled = false
 
-  storage_mb   = var.storage_mb
+  storage_mb = var.storage_mb
   #storage_tier = var.storage_tier
 
   sku_name    = var.sku_name
@@ -88,6 +88,7 @@ resource "azurerm_private_endpoint" "pep1" {
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = azurerm_subnet.snet1.id
+  depends_on          = [azurerm_postgresql_flexible_server.postgresql_fs]
 
   private_service_connection {
     name                           = "postgresql-test-psc1"
@@ -95,10 +96,8 @@ resource "azurerm_private_endpoint" "pep1" {
     #https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview#private-link-resource
     subresource_names    = ["postgresqlServer"]
     is_manual_connection = false
-
-    depends_on resource.azurerm_postgresql_flexible_server.postgresql_fs
   }
-
+}
 #resource "azurerm_postgresql_flexible_server" "pgsql" {
 #  name                = "hanner-psqlfs1"
 #  resource_group_name = azurerm_resource_group.rg1.name
