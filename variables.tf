@@ -128,6 +128,6 @@ variable "sharename" {
 }
 
 variable "public_network_access_enabled" {
-  type = bool
+  type    = bool
   default = false
 }

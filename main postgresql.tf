@@ -66,10 +66,10 @@ resource "azurerm_postgresql_flexible_server" "postgresql_fs" {
   #delegated_subnet_id    = azurerm_subnet.snet1.id
   #private_dns_zone_id    = azurerm_private_dns_zone.privdns1.id
   public_network_access_enabled = var.public_network_access_enabled
-  administrator_login    = var.administrator_login
-  administrator_password = var.administrator_password
-  zone                   = var.zone
-  tags                   = var.tags
+  administrator_login           = var.administrator_login
+  administrator_password        = var.administrator_password
+  zone                          = var.zone
+  tags                          = var.tags
 
   #public_network_access_enabled = false
 
