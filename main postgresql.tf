@@ -24,22 +24,22 @@ resource "azurerm_virtual_network" "vnet1" {
   address_space       = [var.vnet1cidr]
 }
 
-#Dedicated Subnet for PostgreSQL Flexible Servers
+#Trying PE Subnet for PostgreSQL Flexible Servers
 resource "azurerm_subnet" "snet1" {
   name                 = var.snet1name
   resource_group_name  = azurerm_resource_group.rg1.name
   virtual_network_name = azurerm_virtual_network.vnet1.name
   address_prefixes     = [var.snet1cidr]
   service_endpoints    = ["Microsoft.Storage"]
-  delegation {
-    name = "fs"
-    service_delegation {
-      name = "Microsoft.DBforPostgreSQL/flexibleServers"
-      actions = [
-        "Microsoft.Network/virtualNetworks/subnets/join/action",
-      ]
-    }
-  }
+  #delegation {
+  #  name = "fs"
+  #  service_delegation {
+  #    name = "Microsoft.DBforPostgreSQL/flexibleServers"
+  #    actions = [
+  #      "Microsoft.Network/virtualNetworks/subnets/join/action",
+  #    ]
+  #  }
+  # }
 }
 
 resource "azurerm_private_dns_zone" "privdns1" {
@@ -63,12 +63,14 @@ resource "azurerm_postgresql_flexible_server" "postgresql_fs" {
 
   #Optional Arguments
   version                = var.version_num
-  delegated_subnet_id    = azurerm_subnet.snet1.id
+  #delegated_subnet_id    = azurerm_subnet.snet1.id
   private_dns_zone_id    = azurerm_private_dns_zone.privdns1.id
   administrator_login    = var.administrator_login
   administrator_password = var.administrator_password
   zone                   = var.zone
   tags                   = var.tags
+
+  public_network_access_enabled = false
 
   storage_mb   = var.storage_mb
   #storage_tier = var.storage_tier
@@ -81,6 +83,21 @@ resource "azurerm_postgresql_flexible_server" "postgresql_fs" {
   #auto_grow_enabled            = var.auto_grow_enabled
 }
 
+resource "azurerm_private_endpoint" "pep1" {
+  name                = "pep1"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  subnet_id           = azurerm_subnet.snet1.id
+
+  private_service_connection {
+    name                           = "postgresql-test-psc1"
+    private_connection_resource_id = azurerm_postgresql_flexible_server.postgresql_fs.id
+    #https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview#private-link-resource
+    subresource_names    = ["postgresqlServer"]
+    is_manual_connection = false
+
+    depends_on resource.azurerm_postgresql_flexible_server.postgresql_fs
+  }
 
 #resource "azurerm_postgresql_flexible_server" "pgsql" {
 #  name                = "hanner-psqlfs1"
